@@ -1,0 +1,30 @@
+directory structure completed
+    constants
+        core
+            columns
+            constraints
+            indexes
+            others
+        mysql
+            columns
+            constraints
+            indexes
+
+    orm
+        core
+            columns
+            constraints
+            indexes
+            tables
+        mysql
+            columns
+            constraints
+            indexes
+            tables
+
+mysql:
+    connection manager
+    connection pool
+    query manager
+        sql function validator
+        sql generator

@@ -1,0 +1,141 @@
+CREATE
+    TABLE
+    INDEX
+    VIEW
+ADD
+    COLUMN
+    CONSTRAINT
+
+DROP
+    TABLE
+    COLUMN
+    CONSTRAINT
+    INDEX
+    VIEW
+ALTER
+    TABLE
+    COLUMN
+-----------ORM-FUNCTIONS---------------
+CREATE_TABLE
+CREATE_INDEX
+CREATE_VIEW
+
+ADD_COLUMN
+ADD_CONSTRAINT
+
+DROP_TABLE
+DROP_COLUMN
+DROP_CONSTRAINT
+DROP_INDEX
+DROP_VIEW
+
+ALTER_TABLE
+ALTER_COLUMN
+
+------------------------
+CREATE TABLE Employee (id int);
+CREATE TABLE Employee_copy AS SELECT id, first_name from Employee WHERE id > 5;
+ALTER TABLE Employee ADD COLUMN first_name VARCHAR(100) DEFAULT "NA" NOT NULL;
+ALTER TABLE Employee ADD COLUMN last_name VARCHAR(100) DEFAULT "NA" NOT NULL;
+
+# unique
+CREATE TABLE Employee (
+    id int,
+    emp_id int,
+    CONSTRAINT UC_Employee_emp_id UNIQUE (emp_id)
+)
+
+ALTER TABLE Employee ADD CONSTRAINT UC_Employee_id_emp_id UNIQUE (id,emp_id);
+
+ALTER TABLE Emplyee DROP CONSTRAINT UC_Employee_id_emp_id
+
+# primary key
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    CONSTRAINT PK_Person PRIMARY KEY (ID,LastName)
+);
+
+ALTER TABLE Persons ADD CONSTRAINT PK_Person PRIMARY KEY (ID,LastName);
+
+ALTER TABLE Persons DROP CONSTRAINT PK_Person;
+
+# foreign key
+
+CREATE TABLE Orders (
+    OrderID int NOT NULL,
+    OrderNumber int NOT NULL,
+    PersonID int,
+    PRIMARY KEY (OrderID),
+    CONSTRAINT FK_PersonOrder FOREIGN KEY (PersonID)
+    REFERENCES Persons(PersonID)
+);
+
+ALTER TABLE Orders ADD CONSTRAINT FK_PersonOrder FOREIGN KEY (PersonID) REFERENCES Persons(PersonID);
+
+ALTER TABLE Orders DROP CONSTRAINT FK_PersonOrder;
+
+# check
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    City varchar(255),
+    CONSTRAINT CHK_Person CHECK (Age>=18 AND City='Sandnes')
+);
+
+ALTER TABLE Persons ADD CONSTRAINT CHK_PersonAge CHECK (Age>=18 AND City='Sandnes');
+
+ALTER TABLE Persons DROP CONSTRAINT CHK_PersonAge;
+
+
+# default
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    City varchar(255) DEFAULT 'Sandnes'
+);
+CREATE TABLE Orders (
+    ID int NOT NULL,
+    OrderNumber int NOT NULL,
+    OrderDate date DEFAULT GETDATE()
+);
+
+ALTER TABLE Persons ALTER COLUMN City SET DEFAULT 'Sandnes';
+
+ALTER TABLE Persons ALTER COLUMN City DROP DEFAULT;
+
+# indexes
+
+CREATE INDEX index_name
+ON table_name (column1, column2, ...);
+CREATE UNIQUE INDEX index_name
+ON table_name (column1, column2, ...);
+
+DROP INDEX index_name ON table_name;
+
+# auto increment
+    check online
+
+# views
+CREATE VIEW view_name AS
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition;
+
+
+CREATE OR REPLACE VIEW view_name AS
+        SELECT column1, column2, ...
+        FROM table_name
+        WHERE condition;
+
+SELECT * FROM [Products Above Average Price];
+
+DROP VIEW [Brazil Customers];

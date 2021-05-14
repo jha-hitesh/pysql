@@ -1,0 +1,13 @@
+testcases for mysql ORM
+postgresql ORM
+sql server ORM
+mariadb orm
+elasticsearch orm
+firebase orm
+mongodb orm
+redis orm
+sqlite orm
+
+Table object creations on select query entries returned
+
+generic api layer over a table with params as jsonised sql

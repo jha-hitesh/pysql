@@ -1,0 +1,35 @@
+Operations will be a seperate class with 2 instance variable:
+    requested_operation
+    inner_column
+
+class Operaion:
+
+    def __init__(self, inner_column, requested_operation):
+        self.requested_operation = requested_operation
+        self.inner_column = inner_column
+
+class IdColumn:
+
+    def AS(self, alias):
+        return Operation(self, " ".join("AS", alias))
+
+mysql
+
+SELECT
+    count(id)
+    count(id) as id_count:
+    json_unquote(json_extract(data, "$.id")) As a
+
+SELECT something AS
+    Employee.id.AS(45454)
+
+    IdColumn:
+
+        def AS(self, alias):
+            return Operation(self, " ".join("AS", alias))
+
+
+support for custom operations:
+    SELECT, WHERE, ORDER_BY, GROUP_BY etc all these major functions
+    can accept direct sub sql as string so that custom unsupported sql in orm can be achieved
+

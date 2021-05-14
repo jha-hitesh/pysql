@@ -1,0 +1,311 @@
+CREATE DATABASE testdb;
+CREATE DATABASE testdb1;
+DROP DATABASE testdb;
+USE testdb1;
+*db_backup_section
+    https://www.w3schools.com/sql/sql_backup_db.asp
+
+CREATE TABLE Employee (id int);
+ALTER TABLE Employee ADD first_name VARCHAR(100) DEFAULT "NA" NOT NULL;
+ALTER TABLE Employee ADD last_name VARCHAR(100) DEFAULT "NA" NOT NULL;
+* constraints
+    https://www.w3schools.com/sql/sql_constraints.asp
+    UNIQUE:(CREATE TABLE)
+        emp_id VARCHAR(15) UNIQUE
+            SQL Server / Oracle / MS Access:
+        emp_id VARCHAR(15),
+        UNIQUE (emp_id)
+            Mysql
+        id INT NOT NULL,
+        emp_id VARCHAR(15) NOT NULL,
+        CONSTRAINT UC_Person_id_emp_id UNIQUE (id,emp_id)
+            MySQL / SQL Server / Oracle / MS Access:
+    UNIQUE:(ALTER TABLE)
+        ALTER TABLE Employee ADD UNIQUE (emp_id)
+            MySQL / SQL Server / Oracle / MS Access:
+        ALTER TABLE Employee
+        ADD CONSTRAINT UC_Person_id_emp_id UNIQUE (id,emp_id);
+            MySQL / SQL Server / Oracle / MS Access:
+        ALTER TABLE Emplyee DROP INDEX UC_Person_id_emp_id
+            Mysql
+        ALTER TABLE Emplyee DROP CONSTRAINT UC_Person_id_emp_id
+            SQL Server / Oracle / MS Access:
+    PRIMARY KEY:(CREATE TABLE)
+        MySQL:
+            CREATE TABLE Persons (
+                ID int NOT NULL,
+                LastName varchar(255) NOT NULL,
+                FirstName varchar(255),
+                Age int,
+                PRIMARY KEY (ID)
+            );
+        SQL Server / Oracle / MS Access:
+            CREATE TABLE Persons (
+                ID int NOT NULL PRIMARY KEY,
+                LastName varchar(255) NOT NULL,
+                FirstName varchar(255),
+                Age int
+            );
+        MySQL / SQL Server / Oracle / MS Access:
+            CREATE TABLE Persons (
+                ID int NOT NULL,
+                LastName varchar(255) NOT NULL,
+                FirstName varchar(255),
+                Age int,
+                CONSTRAINT PK_Person PRIMARY KEY (ID,LastName)
+            );
+    SQL PRIMARY KEY on ALTER TABLE
+        MySQL / SQL Server / Oracle / MS Access:
+            ALTER TABLE Persons
+            ADD PRIMARY KEY (ID);
+        MySQL / SQL Server / Oracle / MS Access:
+            ALTER TABLE Persons
+            ADD CONSTRAINT PK_Person PRIMARY KEY (ID,LastName);
+        MySQL:
+            ALTER TABLE Persons
+            DROP PRIMARY KEY;
+        SQL Server / Oracle / MS Access:
+            ALTER TABLE Persons
+            DROP CONSTRAINT PK_Person;
+
+    SQL FOREIGN KEY on CREATE TABLE
+        MySQL:
+            CREATE TABLE Orders (
+                OrderID int NOT NULL,
+                OrderNumber int NOT NULL,
+                PersonID int,
+                PRIMARY KEY (OrderID),
+                FOREIGN KEY (PersonID) REFERENCES Persons(PersonID)
+            );
+        SQL Server / Oracle / MS Access:
+            CREATE TABLE Orders (
+                OrderID int NOT NULL PRIMARY KEY,
+                OrderNumber int NOT NULL,
+                PersonID int FOREIGN KEY REFERENCES Persons(PersonID)
+            );
+        MySQL / SQL Server / Oracle / MS Access:
+            CREATE TABLE Orders (
+                OrderID int NOT NULL,
+                OrderNumber int NOT NULL,
+                PersonID int,
+                PRIMARY KEY (OrderID),
+                CONSTRAINT FK_PersonOrder FOREIGN KEY (PersonID)
+                REFERENCES Persons(PersonID)
+            );
+    SQL FOREIGN KEY on ALTER TABLE
+        MySQL / SQL Server / Oracle / MS Access:
+            ALTER TABLE Orders
+            ADD FOREIGN KEY (PersonID) REFERENCES Persons(PersonID);
+
+        MySQL / SQL Server / Oracle / MS Access:
+            ALTER TABLE Orders
+            ADD CONSTRAINT FK_PersonOrder
+            FOREIGN KEY (PersonID) REFERENCES Persons(PersonID);
+        MySQL:
+            ALTER TABLE Orders
+            DROP FOREIGN KEY FK_PersonOrder;
+        SQL Server / Oracle / MS Access:
+            ALTER TABLE Orders
+            DROP CONSTRAINT FK_PersonOrder;
+    SQL CHECK on CREATE TABLE
+        MySQL:
+            CREATE TABLE Persons (
+                ID int NOT NULL,
+                LastName varchar(255) NOT NULL,
+                FirstName varchar(255),
+                Age int,
+                CHECK (Age>=18)
+            );
+        SQL Server / Oracle / MS Access:
+            CREATE TABLE Persons (
+                ID int NOT NULL,
+                LastName varchar(255) NOT NULL,
+                FirstName varchar(255),
+                Age int CHECK (Age>=18)
+            );
+        MySQL / SQL Server / Oracle / MS Access:
+            CREATE TABLE Persons (
+                ID int NOT NULL,
+                LastName varchar(255) NOT NULL,
+                FirstName varchar(255),
+                Age int,
+                City varchar(255),
+                CONSTRAINT CHK_Person CHECK (Age>=18 AND City='Sandnes')
+            );
+    SQL CHECK on ALTER TABLE
+        MySQL / SQL Server / Oracle / MS Access:
+            ALTER TABLE Persons
+            ADD CHECK (Age>=18);
+        MySQL / SQL Server / Oracle / MS Access:
+            ALTER TABLE Persons
+            ADD CONSTRAINT CHK_PersonAge CHECK (Age>=18 AND City='Sandnes');
+        SQL Server / Oracle / MS Access:
+            ALTER TABLE Persons
+            DROP CONSTRAINT CHK_PersonAge;
+        MySQL:
+            ALTER TABLE Persons
+            DROP CHECK CHK_PersonAge;
+    SQL DEFAULT on CREATE TABLE
+        My SQL / SQL Server / Oracle / MS Access:
+            CREATE TABLE Persons (
+                ID int NOT NULL,
+                LastName varchar(255) NOT NULL,
+                FirstName varchar(255),
+                Age int,
+                City varchar(255) DEFAULT 'Sandnes'
+            );
+            CREATE TABLE Orders (
+                ID int NOT NULL,
+                OrderNumber int NOT NULL,
+                OrderDate date DEFAULT GETDATE()
+            );
+        SQL DEFAULT on ALTER TABLE
+            MySQL:
+                ALTER TABLE Persons
+                ALTER City SET DEFAULT 'Sandnes';
+            SQL Server:
+                ALTER TABLE Persons
+                ADD CONSTRAINT df_City
+                DEFAULT 'Sandnes' FOR City;
+            MS Access:
+                ALTER TABLE Persons
+                ALTER COLUMN City SET DEFAULT 'Sandnes';
+            Oracle:
+                ALTER TABLE Persons
+                MODIFY City DEFAULT 'Sandnes';
+            MySQL:
+                ALTER TABLE Persons
+                ALTER City DROP DEFAULT;
+            SQL Server / Oracle / MS Access:
+                ALTER TABLE Persons
+                ALTER COLUMN City DROP DEFAULT;
+
+        CREATE INDEX Syntax:(db sepecific syntax not available, check online)
+            CREATE INDEX index_name
+            ON table_name (column1, column2, ...);
+            CREATE UNIQUE INDEX index_name
+            ON table_name (column1, column2, ...);
+        drop index
+            MS Access:
+                DROP INDEX index_name ON table_name;
+            SQL Server:
+                DROP INDEX table_name.index_name;
+            DB2/Oracle:
+                DROP INDEX index_name;
+            MySQL:
+                ALTER TABLE table_name
+                DROP INDEX index_name;
+        AUTO INCREMENT Field
+            Mysql
+                CREATE TABLE Persons (
+                    Personid int NOT NULL AUTO_INCREMENT,
+                    LastName varchar(255) NOT NULL,
+                    FirstName varchar(255),
+                    Age int,
+                    PRIMARY KEY (Personid)
+                );
+                ALTER TABLE Persons AUTO_INCREMENT=100;
+            SQL Server:
+                CREATE TABLE Persons (
+                    Personid int IDENTITY(1,1) PRIMARY KEY,
+                    LastName varchar(255) NOT NULL,
+                    FirstName varchar(255),
+                    Age int
+                );
+                The MS SQL Server uses the IDENTITY keyword to perform an auto-increment feature.
+                In the example above, the starting value for IDENTITY is 1, and it will increment by 1 for each new record.
+            MS Access:
+                CREATE TABLE Persons (
+                    Personid AUTOINCREMENT PRIMARY KEY,
+                    LastName varchar(255) NOT NULL,
+                    FirstName varchar(255),
+                    Age int
+                );
+                The MS Access uses the AUTOINCREMENT keyword to perform an auto-increment feature.
+                By default, the starting value for AUTOINCREMENT is 1, and it will increment by 1 for each new record.
+                Tip: To specify that the "Personid" column should start at value 10 and increment by 5, change the autoincrement to AUTOINCREMENT(10,5).
+            Oracle:
+                You will have to create an auto-increment field with the sequence object (this object generates a number sequence).
+
+                CREATE SEQUENCE seq_person
+                MINVALUE 1
+                START WITH 1
+                INCREMENT BY 1
+                CACHE 10;
+
+                The code above creates a sequence object called seq_person, that starts with 1 and will increment by 1. It will also cache up to 10 values for performance. The cache option specifies how many sequence values will be stored in memory for faster access.
+
+                To insert a new record into the "Persons" table, we will have to use the nextval function (this function retrieves the next value from seq_person sequence):
+
+                INSERT INTO Persons (Personid,FirstName,LastName)
+                VALUES (seq_person.nextval,'Lars','Monsen');
+
+    SQL Date Data Types
+        MySQL comes with the following data types for storing a date or a date/time value in the database:
+
+        DATE - format YYYY-MM-DD
+        DATETIME - format: YYYY-MM-DD HH:MI:SS
+        TIMESTAMP - format: YYYY-MM-DD HH:MI:SS
+        YEAR - format YYYY or YY
+        SQL Server comes with the following data types for storing a date or a date/time value in the database:
+
+        DATE - format YYYY-MM-DD
+        DATETIME - format: YYYY-MM-DD HH:MI:SS
+        SMALLDATETIME - format: YYYY-MM-DD HH:MI:SS
+        TIMESTAMP - format: a unique number
+
+        SELECT * FROM Orders WHERE OrderDate='2008-11-11'
+        SELECT * FROM Orders WHERE OrderDate='2008-11-11'
+
+        Tip: To keep your queries simple and easy to maintain, do not use time-components in your dates, unless you have to!
+
+    SQL Views:
+        CREATE VIEW view_name AS
+        SELECT column1, column2, ...
+        FROM table_name
+        WHERE condition;
+
+        CREATE VIEW [Brazil Customers] AS
+        SELECT CustomerName, ContactName
+        FROM Customers
+        WHERE Country = 'Brazil';
+
+        SELECT * FROM [Brazil Customers];
+
+        CREATE VIEW [Products Above Average Price] AS
+        SELECT ProductName, Price
+        FROM Products
+        WHERE Price > (SELECT AVG(Price) FROM Products);
+
+        SELECT * FROM [Products Above Average Price];
+
+        CREATE OR REPLACE VIEW view_name AS
+        SELECT column1, column2, ...
+        FROM table_name
+        WHERE condition;
+
+        CREATE OR REPLACE VIEW [Brazil Customers] AS
+        SELECT CustomerName, ContactName, City
+        FROM Customers
+        WHERE Country = 'Brazil';
+
+        DROP VIEW [Brazil Customers];
+
+*https://www.w3schools.com/sql/sql_injection.asp
+*https://www.w3schools.com/sql/sql_datatypes.asp
+
+
+CREATE TABLE constraint_test (
+    id INT NOT NULL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL DEFAULT "NA",
+);
+CREATE TABLE Employee_copy AS SELECT id, first_name from Employee WHERE id > 5;
+ALTER TABLE Employee DROP COLUMN last_name;
+ALTER TABLE ALTER COLUMN first_name VARCHAR(50);
+    SQL Server / MS Access:
+ALTER TABLE MODIFY COLUMN first_name VARCHAR(50);
+    My SQL / Oracle (prior version 10G):
+ALTER TABLE MODIFY first_name VARCHAR(50);
+    Oracle 10G and later:
+START TRANSACTION;

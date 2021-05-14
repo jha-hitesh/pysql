@@ -1,0 +1,2 @@
+class InvalidConstraintPropertyException(Exception):
+    pass

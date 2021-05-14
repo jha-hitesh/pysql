@@ -1,0 +1,11 @@
+class BaseColumn:
+
+    __slots__ = "a tuple representing all the instance variables that"
+        "this column will have"
+    default_properties_map = "default values for entries in __slots__"
+    data_type_validator = "a function which would validate data"
+    data_type_error_msg = "error message on data validation failure"
+
+    table = "a refrence to the table in which this column is part of"
+    column_name = "the internal name of the column for database"
+    column_definition = " a sub sql representing the column keywords"
