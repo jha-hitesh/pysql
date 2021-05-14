@@ -7,22 +7,22 @@ It's not even ready as a full fledged ORM yet, It's more of a hobby of mine to u
 
 
 ### Installing
-* PySQL is available on PyPi.
-* you can use pip to install this using `pip install pysql-orm`
-* It requires python 3.7 or greater to work.
+    WIP
 
 
 ### Configuring
+     WIP
 
 
 ### Using
+     WIP
 
 
 ### Advanced Usage
-
+     WIP
 
 ## Running the tests
-* will be added
+     WIP
 
 ## Built With
 * python : https://www.python.org/
